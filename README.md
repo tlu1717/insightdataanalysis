@@ -1,8 +1,8 @@
 # Insight Data Engineering Coding Challenge 
 
-author: Tiffany Lu
-environment: python3
-library: sys
+* author: Tiffany Lu
+* environment: python3
+* library: sys
 
 ## Problem
 (Copied from https://github.com/InsightDataScience/h1b_statistics)
@@ -16,11 +16,11 @@ Your code should be modular and reusable for future. If the newspaper gets data 
 ## Approach
 I split the data cleaning and processing into 3 parts: extracting, getting-occupations and getting-states. 
 
-										extracting
-									/       		 \
-						   get_occupations  		get_states
-						         | 						|
-				top_10_occupations.txt  			top_10_states.txt
+							extracting
+						/       		 \
+get_occupations  		get_states
+		| 						|
+	top_10_occupations.txt  			top_10_states.txt
 
 
 ### Extracting Data - read_csv()
@@ -38,7 +38,16 @@ This is the big wrapper function that will output the top states and occupations
 The get_occupations() and get_states() functions are so similar that I can combine them both into one single function. However, since different data have different formats and different column titles, I write individual functions for getting the occupations and getting the states for easier error handling and debugging in the future. I am going to assume that there might be some data without a 'status' column or a 'workstate' column, or a 'soc-title' column. For example, I am currently assuming that there will only be one 'work state' related column in the data, and the name will always contain the keyword 'work' and 'state'. But if the data did not have any such column or the name of such column does not contain the keywords, there will be an error.
 
 ## Run instructions
-`cd <name of directory>`
+Inside run.sh, the bash shell script should execute the python3 program. 
+To execute run.sh, please change directory code base directory and type the following into the terminal
+`./run.sh'
+The format is: 
+`python3 ./src/parsedata.py <path to the input csv file (data)> <path to output top-10-occupations file> <path to output top-10-states file>`
+
+For example, 
+`python3 ./src/parsedata.py ./input/h1b_input.csv ./output/top_10_occupations.txt ./output/top_10_states.txt`
+will execute ./src/parsedata.py script with the input data './input/h1b_input.csv' and it will output two files: './output/top_10_occupations.txt' and '/output/top_10_states.txt'
+
 
 
 
