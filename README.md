@@ -16,11 +16,12 @@ Your code should be modular and reusable for future. If the newspaper gets data 
 ## Approach
 I split the data cleaning and processing into 3 parts: extracting, getting-occupations and getting-states. 
 
-							extracting
+`							extracting
 						/       		 \
 get_occupations  		get_states
 		| 						|
 	top_10_occupations.txt  			top_10_states.txt
+`
 
 
 ### Extracting Data - read_csv()
@@ -47,6 +48,10 @@ The format is:
 For example, 
 `python3 ./src/parsedata.py ./input/h1b_input.csv ./output/top_10_occupations.txt ./output/top_10_states.txt`
 will execute ./src/parsedata.py script with the input data './input/h1b_input.csv' and it will output two files: './output/top_10_occupations.txt' and '/output/top_10_states.txt'
+
+
+## Tests
+insight_tests/tests/test_2: test on empty data
 
 
 
