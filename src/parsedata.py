@@ -1,7 +1,6 @@
 import sys #to get arguments from the terminal
 
 '''
-read_csv
 DESCRIPTION: read the semi-colon separated data and put data into a list
 INPUT: 
     path: the path to the csv file data with semicolon separated (";") format
@@ -22,10 +21,30 @@ def read_csv(path):
     num_attr = 0 #number of attributes
     with open(path, 'r') as file:
         for data in file:
-            entry = data.split(';')
+            
+            #split by ';' but if the ';' is between double quotes, do not care about it
+            data_len = len(data)
+            prev_ind = 0 #store previous index
+            no_split = 0 #if 1, we cannot split when we see ';'
+            entry = []
+            for i in range(data_len):
+                if no_split == 0:
+                    if data[i] == ';':
+                        #print('found ;', prev_ind, i, data[prev_ind:i+1])
+                        #split
+                        entry.append(data[prev_ind:i])
+                        prev_ind = i+1
+                    if data[i] == '"':
+                        no_split = 1
+                #if we are inside a double quotes
+                elif no_split == 1:
+                    if data[i] == '"':
+                        no_split = 0
+            
+            entry.append(data[prev_ind:])
             
             #get rid of the '\n' in the original_cert_date attribute
-            entry[-1] = entry[-1][:-2]
+            entry[-1] = entry[-1][:-1]
                     
             #get only the data that case_status == certified
             #need only the values, not the index in the first column
@@ -49,17 +68,7 @@ def read_csv(path):
                     return -1, -1, -1
                 first = 1
             
-            if entry[status_ind] == 'CERTIFIED':
-                #there are some entries where the string contains ';', and the string will be splitted by our previous operation
-                #so we now check for such entry by noting that such strings always begin with " and the next entry begins with space
-                #the first column is always index, so we can omit it
-                for i in range(1, num_attr-1):
-                    #check if the entry is empty
-                    if len(entry[i])>0 and len(entry[i+1])>0:
-                        #check for spaces so we know for sure the split is with the delimiter ';'
-                        if entry[i][0] == '"' and entry[i+1][0] == ' ':
-                            entry[i] = entry[i] + ';' + entry[i+1]
-                            trash = entry.pop(i+1)
+            if entry[status_ind] == 'CERTIFIED':                 
                 table.append(entry)
                 count = count + 1
             
