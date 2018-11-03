@@ -16,13 +16,6 @@ Your code should be modular and reusable for future. If the newspaper gets data 
 ## Approach
 I split the data cleaning and processing into 3 parts: extracting, getting-occupations and getting-states. 
 
-`							extracting
-						/       		 \
-get_occupations  		get_states
-		| 						|
-	top_10_occupations.txt  			top_10_states.txt
-`
-
 
 ### Extracting Data - read_csv()
 This is the read_csv(path) function in parsedata.py. It gets the csv data line by line and split them up by the ';' delimiter. It also filters for only the applications that are certified. It outputs a list of lists where each internal list represents a row of a table. The input data, or the csv file, must contain the column that represents the application status. If there is not such column, the function will return -1. 
